@@ -42,10 +42,10 @@ public class PlayerController : MonoBehaviour
 		}
 
 		// Movement
-		transform.position += transform.forward * speed * Input.GetAxis("Vertical") * Time.fixedDeltaTime;
-		transform.position += transform.right * speed * Input.GetAxis("Horizontal") * Time.fixedDeltaTime;
-		transform.rotation *= Quaternion.AngleAxis(Input.GetAxis("Mouse X") * MouseSpeed * Time.fixedDeltaTime, Vector3.up);
-		HeadCam.transform.rotation *= Quaternion.AngleAxis(Input.GetAxis("Mouse Y") * MouseSpeed * Time.fixedDeltaTime, Vector3.left);
+		transform.position += transform.forward * speed * Input.GetAxis("Vertical") * Time.deltaTime;
+		transform.position += transform.right * speed * Input.GetAxis("Horizontal") * Time.deltaTime;
+		transform.rotation *= Quaternion.AngleAxis(Input.GetAxis("Mouse X") * MouseSpeed * Time.deltaTime, Vector3.up);
+		HeadCam.transform.rotation *= Quaternion.AngleAxis(Input.GetAxis("Mouse Y") * MouseSpeed * Time.deltaTime, Vector3.left);
 
 
 		if (Input.GetKeyUp(KeyCode.Space))

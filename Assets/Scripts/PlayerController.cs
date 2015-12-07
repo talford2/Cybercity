@@ -52,6 +52,11 @@ public class PlayerController : MonoBehaviour
 		{
 			Debug.Break();
 		}
+
+	    if (Input.GetKeyUp(KeyCode.Escape))
+	    {
+	        Application.Quit();
+	    }
 	}
 
 	private void OnDrawGizmos()

@@ -16,6 +16,11 @@ ModelImporter:
     100016: Box006
     100018: Box007
     100020: Object001
+    100022: Box008
+    100024: Box009
+    100026: Box010
+    100028: Box011
+    100030: Box012
     400000: //RootNode
     400002: Cylinder001
     400004: Cylinder002
@@ -27,6 +32,11 @@ ModelImporter:
     400016: Box006
     400018: Box007
     400020: Object001
+    400022: Box008
+    400024: Box009
+    400026: Box010
+    400028: Box011
+    400030: Box012
     2300000: //RootNode
     2300002: Cylinder001
     2300004: Cylinder002
@@ -38,6 +48,11 @@ ModelImporter:
     2300016: Box006
     2300018: Box007
     2300020: Object001
+    2300022: Box008
+    2300024: Box009
+    2300026: Box010
+    2300028: Box011
+    2300030: Box012
     3300000: //RootNode
     3300002: Cylinder001
     3300004: Cylinder002
@@ -49,6 +64,11 @@ ModelImporter:
     3300016: Box006
     3300018: Box007
     3300020: Object001
+    3300022: Box008
+    3300024: Box009
+    3300026: Box010
+    3300028: Box011
+    3300030: Box012
     4300000: Cylinder001
     4300002: Cylinder002
     4300004: Box001
@@ -59,6 +79,11 @@ ModelImporter:
     4300014: Box006
     4300016: Box007
     4300018: Object001
+    4300020: Box008
+    4300022: Box009
+    4300024: Box010
+    4300026: Box011
+    4300028: Box012
   materials:
     importMaterials: 1
     materialName: 0

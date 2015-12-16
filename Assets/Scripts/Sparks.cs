@@ -6,12 +6,14 @@ public class Sparks : MonoBehaviour
     public Light SparksLight;
     public float SparksLightIntensity;
     public AnimationCurve LightIntensityCurve;
+    public float PitchUp = 45f;
 
     private float cooldown;
 
 	void Start ()
 	{
 	    cooldown = Lifetime;
+        transform.forward = Quaternion.AngleAxis(-PitchUp, transform.right) * transform.forward;
 	}
 	
 	void Update () {

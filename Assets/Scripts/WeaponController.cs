@@ -27,12 +27,19 @@ public class WeaponController : MonoBehaviour
     private float shootCooldown;
     private bool isRestoring;
     private float restoreCooldown;
+    private bool isAiming;
 
     private Vector3 initialOffset;
     private Quaternion initialRotation;
 
     private Vector3 shootOffset;
     private Quaternion shootRotation;
+
+    private Vector3 aimingOffset;
+    private Quaternion aimingRotation;
+
+    private Vector3 currentOffset;
+    private Quaternion currentRotation;
 
     private int missilePoolCount = 20;
     private List<GameObject> missileInstances;
@@ -49,6 +56,9 @@ public class WeaponController : MonoBehaviour
 
         shootOffset = new Vector3(0f, 0f, -0.25f);
         shootRotation = Quaternion.Euler(0f, 0f, -10f);
+
+        aimingOffset = new Vector3(0f, -0.2f, 0.1f);
+        aimingRotation = Quaternion.Euler(0f, 90f, 0f);
 
         FlashLight.enabled = false;
         MuzzleRenderer.enabled = false;
@@ -93,6 +103,19 @@ public class WeaponController : MonoBehaviour
             }
         }
 
+        if (Input.GetMouseButton(1))
+        {
+            isAiming = true;
+            currentOffset = aimingOffset;
+            currentRotation = aimingRotation;
+        }
+        else
+        {
+            isAiming = false;
+            currentOffset = initialOffset;
+            currentRotation = initialRotation;
+        }
+
         if (isShooting)
         {
             if (shootCooldown >= 0f)
@@ -122,8 +145,8 @@ public class WeaponController : MonoBehaviour
                 if (restoreCooldown < 0f)
                 {
                     isRestoring = false;
-                    EquippedWeapon.localPosition = initialOffset;
-                    EquippedWeapon.localRotation = initialRotation;
+                    EquippedWeapon.localPosition = currentOffset;
+                    EquippedWeapon.localRotation = currentRotation;
                 }
             }
         }
@@ -131,16 +154,16 @@ public class WeaponController : MonoBehaviour
         if (isShooting)
         {
             var shootFraction = ShootCurve.Evaluate(1f - Mathf.Clamp01(shootCooldown/ShootTime));
-            EquippedWeapon.localPosition = Vector3.Lerp(initialOffset, initialOffset + shootOffset, shootFraction);
-            EquippedWeapon.localRotation = Quaternion.Lerp(initialRotation, shootRotation*initialRotation, shootFraction);
+            EquippedWeapon.localPosition = Vector3.Lerp(currentOffset, currentOffset + shootOffset, shootFraction);
+            EquippedWeapon.localRotation = Quaternion.Lerp(currentRotation, shootRotation * currentRotation, shootFraction);
             FlashLight.intensity = 2f*Mathf.Clamp01(shootCooldown/ShootTime);
         }
 
         if (isRestoring)
         {
             var restoreFraction = RestoreCurve.Evaluate(1f - Mathf.Clamp01(restoreCooldown/RestoreTime));
-            EquippedWeapon.localPosition = Vector3.Lerp(initialOffset + shootOffset, GetIdleOffset(), restoreFraction);
-            EquippedWeapon.localRotation = Quaternion.Lerp(shootRotation * initialRotation, GetIdleRotation(), restoreFraction);
+            EquippedWeapon.localPosition = Vector3.Lerp(currentOffset + shootOffset, GetIdleOffset(), restoreFraction);
+            EquippedWeapon.localRotation = Quaternion.Lerp(shootRotation*currentRotation, GetIdleRotation(), restoreFraction);
         }
 
         omega = (omega + 90f*Time.deltaTime)%360f;
@@ -153,12 +176,16 @@ public class WeaponController : MonoBehaviour
 
     private Vector3 GetIdleOffset()
     {
-        return initialOffset + new Vector3(0f, 0.01f * Mathf.Sin(omega * Mathf.Deg2Rad) - 0.005f, 0f);
+        if (isAiming)
+            return currentOffset + new Vector3(0f, 0.002f * Mathf.Sin(omega * Mathf.Deg2Rad) - 0.0001f, 0f);
+        return currentOffset + new Vector3(0f, 0.01f * Mathf.Sin(omega * Mathf.Deg2Rad) - 0.005f, 0f);
     }
 
     private Quaternion GetIdleRotation()
     {
-        return initialRotation*Quaternion.AngleAxis(5f*Mathf.Sin(omega*Mathf.Deg2Rad), Vector3.up);
+        if (isAiming)
+            return currentRotation * Quaternion.AngleAxis(1f * Mathf.Sin(omega * Mathf.Deg2Rad), Vector3.up);
+        return currentRotation * Quaternion.AngleAxis(5f * Mathf.Sin(omega * Mathf.Deg2Rad), Vector3.up);
     }
 
     /*

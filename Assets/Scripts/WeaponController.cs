@@ -54,8 +54,8 @@ public class WeaponController : MonoBehaviour
         initialOffset = EquippedWeapon.localPosition;
         initialRotation = EquippedWeapon.localRotation;
 
-        shootOffset = new Vector3(0f, 0f, -0.25f);
-        shootRotation = Quaternion.Euler(0f, 0f, -10f);
+        shootOffset = new Vector3(0.02f, 0f, -0.15f);
+        shootRotation = Quaternion.Euler(-10f, 0f, 0f);
 
         aimingOffset = new Vector3(0f, -0.2f, 0.1f);
         aimingRotation = Quaternion.Euler(0f, 90f, 0f);
